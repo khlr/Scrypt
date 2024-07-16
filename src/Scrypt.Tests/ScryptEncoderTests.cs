@@ -45,15 +45,13 @@ namespace Scrypt.Tests
             Assert.Throws<ArgumentException>(() => encoder.Encode("MyPassword"));
         }
 
-        [Fact]
-        public void TestBackwardCompatibility()
+        [Theory]
+        [InlineData("$s0$40000801$eM1F+ITBb6SVFQ5QxD2jWXY8s4RGsIU+Yh4JosOewoY=$1h22/MY2cpm9Vz7//NRiXwCjffVXQWOKJ7n27vNVfP4=")]
+        [InlineData("$s1$40000801$5ScyYcGbFmSF5P+A64cThg+c6rFtsfyxDHkWWCt97xI=$U+7EMhBXHjNHudmn/sgvX4VZ6ddoSKLkL0nDOSKYLaQ=")]
+        [InlineData("$s2$16384$8$1$pKHZk7yiyj5l4UaW1lMDBkj6Q0+Fw/Nyqx9r+sgM9PE=$JuhWa5STBbHuPbOJjcxSV8WDxSH5hQsPlW9nTNce/sc=")]
+        public void TestVersionsForBackwardCompatibility(string hashedPassword)
         {
             var encoder = new ScryptEncoder();
-
-            var hashedPassword = "$s0$40000801$eM1F+ITBb6SVFQ5QxD2jWXY8s4RGsIU+Yh4JosOewoY=$1h22/MY2cpm9Vz7//NRiXwCjffVXQWOKJ7n27vNVfP4=";
-            Assert.True(encoder.Compare("MyPassword", hashedPassword));
-
-            hashedPassword = "$s1$40000801$5ScyYcGbFmSF5P+A64cThg+c6rFtsfyxDHkWWCt97xI=$U+7EMhBXHjNHudmn/sgvX4VZ6ddoSKLkL0nDOSKYLaQ=";
             Assert.True(encoder.Compare("MyPassword", hashedPassword));
         }
 
